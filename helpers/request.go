@@ -39,6 +39,10 @@ func (req *Request) GetOrigin() string {
 	return req.Header.Get(HEADER_ORIGIN)
 }
 
+func (req *Request) GetContentType() string {
+	return req.Header.Get(HEADER_CONTENT_TYPE)
+}
+
 // func ExtractRequestBody(request *http.Request, data model.Model) error {
 // 	err := json.NewDecoder(request.Body).Decode(data)
 // 	if err != nil {
