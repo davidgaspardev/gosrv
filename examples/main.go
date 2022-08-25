@@ -15,6 +15,10 @@ func main() {
 	server.AddRoute("GET", "/v1/hello", []middleware.Middleware{}, HelloWorld)
 	server.AddRoute("GET", "/v1/hello/:name", nil, HelloWithParam)
 
+	server.AddRoute("POST", "/v1/world", []middleware.Middleware{
+		middleware.HasQuery("name"),
+	}, WorldWithQuery)
+
 	server.Run()
 }
 
@@ -29,4 +33,8 @@ func HelloWithParam(req *helpers.Request, res *helpers.Response) {
 	}
 
 	res.Ok(data)
+}
+
+func WorldWithQuery(req *helpers.Request, res *helpers.Response) {
+	res.NoContent()
 }
