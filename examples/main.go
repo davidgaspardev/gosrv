@@ -47,6 +47,11 @@ func WorldWithQuery(req *helpers.Request, res *helpers.Response) {
 }
 
 func WorldWithQueryAndParam(req *helpers.Request, res *helpers.Response) {
+	if req.GetAccept() != "application/json" && req.GetAccept() != "" {
+		res.BadRequest(fmt.Errorf("accept don't supported"))
+		return
+	}
+
 	// Get path parameters from request
 	countryName := req.GetParam("country_name")
 
