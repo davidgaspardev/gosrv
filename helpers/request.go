@@ -43,6 +43,10 @@ func (req *Request) GetContentType() string {
 	return req.Header.Get(HEADER_CONTENT_TYPE)
 }
 
+func (req *Request) GetAccept() string {
+	return req.Header.Get(HEADER_ACCEPT)
+}
+
 // func ExtractRequestBody(request *http.Request, data model.Model) error {
 // 	err := json.NewDecoder(request.Body).Decode(data)
 // 	if err != nil {
