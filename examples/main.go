@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"gosrv"
 	"gosrv/helpers"
 	"gosrv/middleware"
@@ -18,6 +20,13 @@ func main() {
 	server.AddRoute("POST", "/v1/world", []middleware.Middleware{
 		middleware.HasQuery("name"),
 	}, WorldWithQuery)
+	server.AddRoute("POST", "/v1/world/:country_name", []middleware.Middleware{
+		middleware.Or(
+			middleware.HasQuery("language"),
+			middleware.HasQuery("president"),
+		),
+		middleware.HasQuery("currency"),
+	}, WorldWithQueryAndParam)
 
 	server.Run()
 }
@@ -27,14 +36,31 @@ func HelloWorld(req *helpers.Request, res *helpers.Response) {
 }
 
 func HelloWithParam(req *helpers.Request, res *helpers.Response) {
-	data := map[string]interface{}{
-		"name": req.GetParam("name"),
-		"type": req.GetContentType(),
-	}
+	// Get path parameters from request
+	name := req.GetParam("name")
 
-	res.Ok(data)
+	res.Ok(fmt.Sprintf("hello %s", name))
 }
 
 func WorldWithQuery(req *helpers.Request, res *helpers.Response) {
 	res.NoContent()
+}
+
+func WorldWithQueryAndParam(req *helpers.Request, res *helpers.Response) {
+	// Get path parameters from request
+	countryName := req.GetParam("country_name")
+
+	// Get query parameters from request
+	language := req.URL.Query().Get("language")
+	president := req.URL.Query().Get("president")
+	currency := req.URL.Query().Get("currency")
+
+	// Building response data
+	data := make(map[string]interface{})
+	data["countryName"] = countryName
+	data["language"] = language
+	data["president"] = president
+	data["currency"] = currency
+
+	res.Ok(data)
 }
