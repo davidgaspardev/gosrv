@@ -14,6 +14,8 @@ type Response struct {
 	http.ResponseWriter
 }
 
+// Add CORS (Cross-Origin Resource Sharing) in response HTTP header.
+// See more: https://developer.mozilla.org/en-US/docs/Glossary/CORS
 func (res *Response) AddCors(origin string) {
 	res.Header().Add(HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, origin)
 	res.Header().Add(HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS, "true")
@@ -35,6 +37,7 @@ func (res *Response) AddCors(origin string) {
 	))
 }
 
+// Response with error message in json data type
 func (res *Response) responseWithErrorInfo(err error, statusCode int) {
 	errBuffer, _ := json.Marshal(&map[string]string{
 		"message": err.Error(),
@@ -46,6 +49,7 @@ func (res *Response) responseWithErrorInfo(err error, statusCode int) {
 	res.Write(errBuffer)
 }
 
+// Response with json data type
 func (res *Response) responseWithJsonData(data []byte, statusCode int) {
 	res.Header().Set("Content-Type", "application/json; charset=utf-8")
 	res.Header().Set("Content-Length", fmt.Sprint(len(data)))
