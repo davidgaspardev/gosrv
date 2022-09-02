@@ -3,6 +3,8 @@ package gosrv
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/davidgaspardev/golog"
 )
 
 func NewServer() Server {
@@ -32,9 +34,17 @@ func (srv *_Server) Run() error {
 	// Build the routes
 	srv.router.Build()
 
+	if logger {
+		golog.System("Server", "Routes builded")
+	}
+
 	return http.ListenAndServe(fmt.Sprintf(":%d", srv.port), srv.mux)
 }
 
 func (srv *_Server) AddRoute(method, path string, middlewares []Middleware, controller Controller) {
 	srv.router.Add(method, path, middlewares, controller)
+
+	if logger {
+		golog.System("Server", fmt.Sprintf("Route created: %s (%s)", path, method))
+	}
 }
