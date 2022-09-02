@@ -18,9 +18,11 @@ func main() {
 	server.AddRoute("GET", "/v1/hello/:name", nil, HelloWithParam)
 
 	server.AddRoute("POST", "/v1/world", []middleware.Middleware{
+		middleware.Logger,
 		middleware.HasQuery("name"),
 	}, WorldWithQuery)
 	server.AddRoute("POST", "/v1/world/:country_name", []middleware.Middleware{
+		middleware.Logger,
 		middleware.Or(
 			middleware.HasQuery("language"),
 			middleware.HasQuery("president"),
