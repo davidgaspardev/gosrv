@@ -34,14 +34,14 @@ func main() {
 }
 
 func HelloWorld(req *helpers.Request, res *helpers.Response) {
-	res.Ok("hello world")
+	res.OkData("hello world")
 }
 
 func HelloWithParam(req *helpers.Request, res *helpers.Response) {
 	// Get path parameters from request
 	name := req.GetParam("name")
 
-	res.Ok(fmt.Sprintf("hello %s", name))
+	res.OkData(fmt.Sprintf("hello %s", name))
 }
 
 func WorldWithQuery(req *helpers.Request, res *helpers.Response) {
@@ -69,5 +69,5 @@ func WorldWithQueryAndParam(req *helpers.Request, res *helpers.Response) {
 	data["president"] = president
 	data["currency"] = currency
 
-	res.Ok(data)
+	res.OkData(data)
 }

@@ -74,8 +74,13 @@ func (res *Response) InternalServerError(err error) {
 	res.responseWithErrorInfo(err, http.StatusInternalServerError)
 }
 
-// OK (status code: 200)
-func (res *Response) Ok(data interface{}) {
+// OK data (status code: 200).
+// Use this template:
+//
+// {
+//		"data": <buffer>
+// }
+func (res *Response) OkData(data interface{}) {
 	dataBuffer, err := res.loadDataAsBuffer(res.buildPayload(data))
 	if err != nil {
 		res.InternalServerError(err)
@@ -85,8 +90,16 @@ func (res *Response) Ok(data interface{}) {
 	res.responseWithJsonData(dataBuffer, http.StatusOK)
 }
 
-// OK with pagination data (status code: 200)
-func (res *Response) OkWithPagination(data interface{}, totalPages uint) {
+// OK data with pagination data (status code: 200).
+// Use this template:
+//
+// {
+// 		"totalPages": <num>,
+//		"data": [
+//			<buffer>
+//		]
+// }
+func (res *Response) OkDataWithPagination(data interface{}, totalPages uint) {
 	payload := res.buildPayload(data)
 	payload.TotalPages = totalPages
 
