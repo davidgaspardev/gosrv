@@ -2,9 +2,10 @@ package gosrv
 
 import (
 	"fmt"
-	"gosrv/helpers"
 	"net/http"
 	"strings"
+
+	"github.com/davidgaspardev/gosrv/helpers"
 )
 
 type _RouteConfig struct {

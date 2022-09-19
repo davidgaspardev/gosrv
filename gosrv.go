@@ -1,8 +1,8 @@
 package gosrv
 
 import (
-	"gosrv/controller"
-	"gosrv/middleware"
+	"github.com/davidgaspardev/gosrv/controller"
+	"github.com/davidgaspardev/gosrv/middleware"
 )
 
 type Middleware = middleware.Middleware

@@ -5,9 +5,10 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"gosrv/model"
 	"net/http"
 	"strings"
+
+	"github.com/davidgaspardev/gosrv/model"
 )
 
 type Response struct {

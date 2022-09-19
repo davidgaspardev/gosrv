@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"gosrv"
-	"gosrv/helpers"
-	"gosrv/middleware"
+	"github.com/davidgaspardev/gosrv"
+	"github.com/davidgaspardev/gosrv/helpers"
+	"github.com/davidgaspardev/gosrv/middleware"
 )
 
 func main() {

@@ -1,6 +1,6 @@
 package middleware
 
-import "gosrv/helpers"
+import "github.com/davidgaspardev/gosrv/helpers"
 
 /// Middleware failed struture is used to build http response
 type MiddlewareFailed struct {

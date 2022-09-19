@@ -1,4 +1,4 @@
-module gosrv
+module github.com/davidgaspardev/gosrv
 
 go 1.19
 

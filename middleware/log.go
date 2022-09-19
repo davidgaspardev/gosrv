@@ -2,7 +2,8 @@ package middleware
 
 import (
 	"fmt"
-	"gosrv/helpers"
+
+	"github.com/davidgaspardev/gosrv/helpers"
 
 	"github.com/davidgaspardev/golog"
 )
