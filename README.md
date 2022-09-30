@@ -29,3 +29,42 @@ func HelloWorld(req *helpers.Request, res *helpers.Response) {
 	res.Ok("Hello World for you, "+name)
 }
 ```
+
+## Files tree
+
+Below is the tree diagram of the project files.
+
+```bash
+ ---gosrv
+    |   go.mod
+    |   go.sum
+    |   gosrv.go
+    |   LICENSE
+    |   Makefile
+    |   README.md
+    |   router.go
+    |   server.go
+    |
+    +---controller
+    |       controller.go
+    |
+    +---examples
+    |       main.go
+    |
+    +---helpers
+    |       constants.go
+    |       request.go
+    |       response.go
+    |
+    +---middleware
+    |       cors.go
+    |       log.go
+    |       middleware.go
+    |       validation.go
+    |
+    +---model
+    |       data.go
+    |
+    \---tests
+            multi_requests.py
+```
