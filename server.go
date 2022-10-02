@@ -34,11 +34,14 @@ func (srv *_Server) Run() error {
 	// Build the routes
 	srv.router.Build()
 
+	portFormat := fmt.Sprintf(":%d", srv.port)
+
 	if logger {
 		golog.System("Server", "Routes builded")
+		golog.System("Server", "Listening at "+portFormat)
 	}
 
-	return http.ListenAndServe(fmt.Sprintf(":%d", srv.port), srv.mux)
+	return http.ListenAndServe(portFormat, srv.mux)
 }
 
 func (srv *_Server) AddRoute(method, path string, middlewares []Middleware, controller Controller) {
