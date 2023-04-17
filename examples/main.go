@@ -14,7 +14,9 @@ func main() {
 	server.SetPort(8080)
 	server.SetLogger(true)
 
-	server.AddRoute("GET", "/v1/hello", []middleware.Middleware{}, HelloWorld)
+	server.AddRoute("GET", "/v1/hello", []middleware.Middleware{
+		middleware.Logger,
+	}, HelloWorld)
 	server.AddRoute("GET", "/v1/hello/:name", nil, HelloWithParam)
 
 	server.AddRoute("POST", "/v1/world", []middleware.Middleware{
@@ -30,7 +32,9 @@ func main() {
 		middleware.HasQuery("currency"),
 	}, WorldWithQueryAndParam)
 
-	server.Run()
+	if err := server.Run(); err != nil {
+		panic(err)
+	}
 }
 
 func HelloWorld(req *helpers.Request, res *helpers.Response) {
