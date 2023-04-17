@@ -113,10 +113,12 @@ func (router *_Router) Build() {
 		for i := 0; i < len(routeConfig.middlewares); i++ {
 			if middlewareFailed := routeConfig.middlewares[i](request); middlewareFailed != nil {
 				switch middlewareFailed.Code {
-				case 401:
-					response.Unauthorized(middlewareFailed.Error)
-				case 400:
+				case http.StatusBadRequest:
 					response.BadRequest(middlewareFailed.Error)
+				case http.StatusUnauthorized:
+					response.Unauthorized(middlewareFailed.Error)
+				case http.StatusForbidden:
+					response.Forbidden(middlewareFailed.Error)
 				default:
 					response.InternalServerError(middlewareFailed.Error)
 				}
