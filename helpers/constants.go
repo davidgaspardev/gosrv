@@ -1,18 +1,6 @@
 package helpers
 
-import "net/http"
-
 const (
-	// HTTP METHODS
-	METHOD_OPTIONS = http.MethodOptions
-	METHOD_GET     = http.MethodGet
-	METHOD_POST    = http.MethodPost
-
-	STATUS_OK                    = http.StatusOK
-	STATUS_NO_CONTENT            = http.StatusNoContent
-	STATUS_BAD_REQUEST           = http.StatusBadRequest
-	STATUS_INTERNAL_SERVER_ERROR = http.StatusInternalServerError
-
 	// HTTP HEADER
 	HEADER_ACCESS_CONTROL_ALLOW_ORIGIN      = "Access-Control-Allow-Origin"
 	HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials"
