@@ -66,6 +66,10 @@ func (res *Response) Unauthorized(err error) {
 	res.responseWithErrorInfo(err, http.StatusUnauthorized)
 }
 
+func (res *Response) Forbidden(err error) {
+	res.responseWithErrorInfo(err, http.StatusForbidden)
+}
+
 func (res *Response) NotFound() {
 	res.responseWithErrorInfo(fmt.Errorf("route not found"), http.StatusNotFound)
 }
