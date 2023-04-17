@@ -30,9 +30,12 @@ func (res *Response) AddCors(origin string) {
 	))
 	res.Header().Add(HEADER_ACCESS_CONTROL_ALLOW_METHODS, strings.Join(
 		[]string{
-			METHOD_OPTIONS,
-			METHOD_GET,
-			METHOD_POST,
+			http.MethodOptions,
+			http.MethodGet,
+			http.MethodPost,
+			http.MethodPut,
+			http.MethodPatch,
+			http.MethodDelete,
 		},
 		", ",
 	))
