@@ -13,11 +13,13 @@ type _RouteConfig struct {
 	middlewares    []Middleware
 	controller     Controller
 }
+type RouteConfigRef = *_RouteConfig
 
 type _Router struct {
 	routes map[ /** path */ string]map[ /** method */ string]*_RouteConfig
 	mux    *http.ServeMux
 }
+type RouterRef = *_Router
 
 func createRouter(mux *http.ServeMux) *_Router {
 	return &_Router{
@@ -26,7 +28,7 @@ func createRouter(mux *http.ServeMux) *_Router {
 	}
 }
 
-func (router *_Router) Add(method string, path string, middlewares []Middleware, controller Controller) {
+func (router RouterRef) Add(method string, path string, middlewares []Middleware, controller Controller) {
 	route := _RouteConfig{
 		paramsPosition: nil,
 		middlewares:    middlewares,
@@ -69,13 +71,13 @@ func (router *_Router) Add(method string, path string, middlewares []Middleware,
 	// }
 
 	if router.routes[path] == nil {
-		router.routes[path] = make(map[string]*_RouteConfig)
+		router.routes[path] = make(map[string]RouteConfigRef)
 	}
 
 	router.routes[path][method] = &route
 }
 
-func (router *_Router) Build() {
+func (router RouterRef) Build() {
 	router.mux.HandleFunc("/", func(responseWriter http.ResponseWriter, requestCode *http.Request) {
 		response := &helpers.Response{ResponseWriter: responseWriter}
 		request := &helpers.Request{Request: requestCode}
@@ -131,7 +133,7 @@ func (router *_Router) Build() {
 	})
 }
 
-func (router *_Router) findDynamicPathRouteByRequest(request *helpers.Request) *_RouteConfig {
+func (router RouterRef) findDynamicPathRouteByRequest(request *helpers.Request) RouteConfigRef {
 	requestPathDirs := strings.Split(request.URL.Path, "/")
 
 	for path, route := range router.routes {
