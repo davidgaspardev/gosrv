@@ -13,4 +13,4 @@ examples: ## Run examples
 	@go run $(DIR_EXAMPLES)/main.go
 
 test: ## Run tests
-	@$(PYTHON) tests/multi_requests.py
+	@$(PYTHON) tests/multi_requests.py --max 512
