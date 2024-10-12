@@ -23,10 +23,10 @@ def make_request(method, path):
     data = res.read()
 
     if res.status != 200:
-        print(f'{COLOR_RED}[ ERROR ] Failed in the request: {data} {COLOR_RESET}')
+        print(f'{COLOR_RED}[ ERROR ] {method} | {path} - Failed in the request: {data} {COLOR_RESET}')
         result_status = 1
     else:
-        print(f'{COLOR_GREEN}[  OK  ] Successful request: {len(data)} bytes received {COLOR_RESET}')
+        print(f'{COLOR_GREEN}[  OK  ] {method} | {path} - Successful request: {len(data)} bytes received {COLOR_RESET}')
 
 def make_multiple_request(thread_max: int, method: str, path: str):
     requests = [threading.Thread(target=make_request, args=(method,path,)) for i in range(thread_max)]
