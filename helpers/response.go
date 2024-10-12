@@ -61,6 +61,13 @@ func (res *Response) responseWithJsonData(data []byte, statusCode int) {
 	res.Write(data)
 }
 
+func (res *Response) responseWithText(test string, status int) {
+	res.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	res.Header().Set("Content-Length", fmt.Sprint(len(test)))
+	res.WriteHeader(status)
+	res.Write([]byte(test))
+}
+
 func (res *Response) BadRequest(err error) {
 	res.responseWithErrorInfo(err, http.StatusBadRequest)
 }
@@ -85,9 +92,9 @@ func (res *Response) InternalServerError(err error) {
 // OK data (status code: 200).
 // Use this template:
 //
-// {
-//		"data": <buffer>
-// }
+//	{
+//			"data": <buffer>
+//	}
 func (res *Response) OkData(data interface{}) {
 	dataBuffer, err := res.loadDataAsBuffer(res.buildPayload(data))
 	if err != nil {
@@ -101,12 +108,12 @@ func (res *Response) OkData(data interface{}) {
 // OK data with pagination data (status code: 200).
 // Use this template:
 //
-// {
-// 		"totalPages": <num>,
-//		"data": [
-//			<buffer>
-//		]
-// }
+//	{
+//			"totalPages": <num>,
+//			"data": [
+//				<buffer>
+//			]
+//	}
 func (res *Response) OkDataWithPagination(data interface{}, totalPages uint) {
 	payload := res.buildPayload(data)
 	payload.TotalPages = totalPages
@@ -117,6 +124,10 @@ func (res *Response) OkDataWithPagination(data interface{}, totalPages uint) {
 	}
 
 	res.responseWithJsonData(dataBuffer, http.StatusOK)
+}
+
+func (res *Response) OkText(text string) {
+	res.responseWithText(text, http.StatusOK)
 }
 
 // Created (status code: 201)
