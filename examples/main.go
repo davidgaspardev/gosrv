@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/davidgaspardev/gosrv"
+	"github.com/davidgaspardev/gosrv/controller"
 	"github.com/davidgaspardev/gosrv/helpers"
 	"github.com/davidgaspardev/gosrv/middleware"
 )
@@ -13,6 +14,10 @@ func main() {
 
 	server.SetPort(8080)
 	server.SetLogger(true)
+
+	server.AddRoute("GET", "/ping", []middleware.Middleware{
+		middleware.Logger,
+	}, controller.PongController())
 
 	server.AddRoute("GET", "/v1/hello", []middleware.Middleware{
 		middleware.Logger,
