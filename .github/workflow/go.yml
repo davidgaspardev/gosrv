@@ -1,0 +1,47 @@
+name: Go
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.23.1'
+      
+      - name: Install dependencies
+        run: go mod tidy
+      
+      - name: Start the HTTP server
+        run: |
+          # Command to start your HTTP server
+          make examples &  # Replace with the actual command
+      
+      - name: Wait for server to be ready
+        run: |
+          # Wait for the server to be up (you can modify this to fit your needs)
+          for i in {1..10}; do
+            if curl -s http://localhost:8080/healthcheck; then
+              echo "Server is up!"
+              exit 0
+            fi
+            echo "Waiting for server to be up..."
+            sleep 5
+          done
+          echo "Server did not start in time!"
+          exit 1
+      
+      - name: Run client tests
+        run: make test
