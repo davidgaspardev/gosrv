@@ -110,11 +110,11 @@ func (res *Response) OkData(data interface{}) {
 //
 //	{
 //			"totalPages": <num>,
-//			"data": [
+//			"result": [
 //				<buffer>
 //			]
 //	}
-func (res *Response) OkDataWithPagination(data interface{}, totalPages uint) {
+func (res *Response) OkResultWithPagination(data interface{}, totalPages uint) {
 	payload := res.buildPayload(data)
 	payload.TotalPages = totalPages
 
@@ -158,11 +158,11 @@ func (res *Response) isDataBuffer(data interface{}) bool {
 	return fmt.Sprintf("%T", data) == "[]uint8"
 }
 
-func (res *Response) buildPayload(data interface{}) *model.Data {
+func (res *Response) buildPayload(data interface{}) *model.Result {
 	version := md5.Sum([]byte(fmt.Sprintf("%+v", data)))
 
-	payload := model.Data{}
-	payload.Data = data
+	payload := model.Result{}
+	payload.Result = data
 	payload.Version = hex.EncodeToString(version[:])
 
 	return &payload
