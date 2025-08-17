@@ -7,14 +7,14 @@ import (
 )
 
 func HasQuery(queries ...string) Middleware {
-	return func(request *helpers.Request) *MiddlewareFailed {
+	return func(request *helpers.Request) *MiddlewareResponse {
 		queryNum := len(queries)
 
 		for i := 0; i < queryNum; i++ {
 			query := request.URL.Query().Get(queries[i])
 
 			if query == "" {
-				return &MiddlewareFailed{
+				return &MiddlewareResponse{
 					Code:  400,
 					Error: fmt.Errorf("missing query: %s", queries[i]),
 				}
@@ -26,7 +26,7 @@ func HasQuery(queries ...string) Middleware {
 }
 
 func Or(middlewares ...Middleware) Middleware {
-	return func(request *helpers.Request) (failed *MiddlewareFailed) {
+	return func(request *helpers.Request) (failed *MiddlewareResponse) {
 		middlewaresNum := len(middlewares)
 
 		for i := 0; i < middlewaresNum; i++ {

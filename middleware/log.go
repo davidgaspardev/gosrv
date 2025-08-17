@@ -8,7 +8,7 @@ import (
 	"github.com/davidgaspardev/golog"
 )
 
-func Logger(request *helpers.Request) *MiddlewareFailed {
+func Logger(request *helpers.Request) *MiddlewareResponse {
 	address := request.RemoteAddr
 
 	golog.Io("Request", fmt.Sprintf("(%s) Method: %s", address, request.Method))
